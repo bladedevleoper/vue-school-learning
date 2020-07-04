@@ -1,0 +1,69 @@
+Global Vs Local Componentns:
+
+
+There are two ways to register components:
+
+1. Is Globally
+2. Is Locally
+
+
+We have been registering our components using Vue.components(); which this will make our component globally and available through out our application.
+
+Cons of registering a component globally:
+
+Registering a compnent globally is not often not ideal. If we are using a build system like Webpack, by globally registering the components, it would mean that unused components will then get included in the final build.
+- this leads to increased javacript
+- more time for the user to download.
+
+
+For instance, we will not use the plan component (child) outside of the plan-picker component (parent).
+
+So for the plan component, we can remove the Vue.component() and change it to an object, and register when we want to use it.
+
+
+let ComponentName = {
+    template: '#some-id',
+    props: {
+
+    },
+    methods: {
+
+    },
+}
+
+
+Vue.component('parent-component', {
+    template: '#some-parent-id',
+    components: {
+        "component-html": ComponentName,
+    }
+});
+
+
+in the html:
+
+<component-html></component-html>
+
+
+Cannot accecss the child component outside of the parent:
+---------------------------------------------------------
+- Since we registered the child component locally, we cannot use it outside.
+
+for instance our <plan-picker> is the parent component with a nested <plan> component, plan is the locally registered component. We cannot take <plan> an place it in our application. We will have an error in the console:
+"Unknown custom element: <component name> - did you register the compnent correctly"
+
+
+
+We can also register the parent component locally and then bind it to the root instance:
+----------------------------------------------------------------------------------------
+
+new Vue({
+    el: '#app',
+    components: {
+        "plan-picker": PlanPickerComponent,
+    }
+});
+
+
+For component reuse:
+- try to register such things a base button

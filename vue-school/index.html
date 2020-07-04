@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Learning Vue Fundementals</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <style>
+            .pointer{
+                cursor: pointer;
+            }
+
+            .pointer:hover{
+                color:red;
+            }
+
+            .green {
+                color:green;
+            }
+
+            .strikeout{
+                text-decoration: line-through;
+                color:gray;
+
+            }
+
+            .highPriority {
+                color: red;
+                font-weight: bold;
+            }
+        </style>
+        <script src="https://unpkg.com/vue"></script>
+        
+    </head>
+    <body>
+        <div id="shopping-list" class="container">
+            <div class="header mb-5">
+               <h1>{{ header ? header.toLocaleUpperCase() : '' }}</h1>
+               <button v-if="state == 'default'" class="btn btn-primary" @click="changeState('edit')">Add Items</button>
+               <button v-else class="btn btn-danger" @click="changeState('default')">Cancel</button>
+            </div>
+            
+            <!-- <div class="row">
+                <input type="checkbox" id="hide-form" value="1" @change="hideForm"> 
+                <label id="shopping-label">Hide Shopping List?</label>
+            </div> -->
+            <!-- <div id="shopping-cart"> -->
+                <div v-if="state == 'edit'" class="add-item-form">
+                    <input type="text" name="" id="" v-model="newItem" placeholder="Add an item" @keyup.enter="addToList()">
+                    <!-- <p>{{ characterCount }}/200</p> -->
+                    <button class="btn btn-primary" @click="addToList()" :disabled="items.length == 0">Save Item</button>
+                </div>
+                <hr>
+                <h5>Current Shopping List | <span class="green">Hover over an item to remove it</span></h5>
+                
+                <ul>
+                    <!-- 
+                        Object Syntax with dynamic classes 
+                        - use to perform single conditionals
+                    -->
+                    <!-- <li v-for="item in items" class="pointer"  @click="togglePurchased(item)" :class="{strikeout: item.purchased}">{{ item.label }}</li> -->
+                    <!--  
+                        Array Syntax with dynamic classes
+                        - use to determine more than one conditional to a dynamic class
+                    -->
+                    <!-- <li v-for="item in items" class="pointer" @click="removeItem" :class="[item.purchased ? 'strikeout' : '', item.highPriority ? 'highPriority' : '' ]">{{ item.label }}</li> -->
+
+                    <!-- 
+                        example using the reversedItems computed property to return the list items in reverse:
+                    -->
+
+                    <li v-for="item in reversedItems" class="pointer"  @click="togglePurchased(item)" :class="{strikeout: item.purchased}">{{ item.label }}</li>
+                </ul>
+                <p v-if="items.length == 0">Nice job! You've have bought all your items</p>
+            <!-- </div> -->
+        </div>
+        
+        <script>
+            const shoppingList = new Vue({
+                el: '#shopping-list',
+                data: {
+                    state: 'default',
+                    header: 'shopping list app',
+                    newItem: '',
+                    items: [
+                        {
+                            label: '10 party hats',
+                            purchased: false,
+                            highPriority: false,
+                        },
+                        {
+                            label: '2 board games',
+                            purchased: false,
+                            highPriority: true,
+                        },
+                        {
+                            label: '20 cups',
+                            purchased: true,
+                            highPriority: false,
+                        },
+                    
+                    ]
+                },
+                methods: {
+                    addToList(){
+                        this.items.push({
+                            label: this.newItem,
+                            purchased: false,
+                        });
+                        this.newItem = '';
+                    },
+                    removeItem: function (e) {
+                        e.target.style.display = 'none';
+                    },
+                    hideForm: function (){
+                        const shoppingList = document.querySelector('#shopping-cart');
+                        const hideForm = document.querySelector('#hide-form');
+
+                        if (hideForm.checked) {
+                            document.querySelector('#shopping-label').textContent = 'Show Current Shopping List?';
+                            shoppingList.setAttribute('hidden', true);
+                        } else {
+                            document.querySelector('#shopping-label').textContent = 'Hide Shopping List?';
+                            shoppingList.removeAttribute('hidden');
+                        }
+                    },
+                    changeState: function (newState) {
+                        this.state = newState;
+                    
+                        //clears any half finished item
+                        this.newItem = '';
+                    },
+                    togglePurchased: function (item) {
+
+                        //! basically means item.purchased is not true
+                        item.purchased = !item.purchased;
+                    }
+                },
+                computed: {
+                    //showing basic computed properties
+                    // characterCount: function () {
+                    //     return this.newItem.length;3
+                    // }
+                    reversedItems: function () {
+                        /*
+                            slice(0) this returns a copy of the existing items array
+                        */
+                        return this.items.slice(0).reverse();
+                    }
+                },
+            });
+        </script>
+    </body>
+</html>

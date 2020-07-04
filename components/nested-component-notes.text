@@ -1,0 +1,14 @@
+Nested Components:
+------------------
+
+# Our example is using the plan component, which the plan component looks like:
+
+<div class="plans">
+    <plan v-for="plan in plans" :key="plan" :name="plan"></plan>
+</div>
+
+# if we wanted to re-use this in other parts of our application, we would have to copy the html and the compnent name to that part. Which this would mean code is being repeated.
+
+So we can have a compnent nested in with another component.
+
+note: if there is a data that the child component receives, then the parent component must have a data() method which then holds the data.

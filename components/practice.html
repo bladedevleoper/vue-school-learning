@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="css/style.css"></style>
+        <style>
+            .selected{
+                border: 1px solid red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container mx-auto">
+            <div id="app">
+                <family-tree-parent></family-tree-parent>
+            </div>
+        </div>
+        
+        <script type="text/x-template" id="family-tree-parent-template">
+            <div class="plans">
+                <div class="content">
+                    <h1 class="title">
+                        Family Tree
+                    </h1>
+                    <family-tree v-for="member in family" @selected="selectedMember"
+                     :key="member.name"
+                     :member-name="member.name"
+                     :member-age="member.age"
+                     :gender="member.gender"
+                     :selected-member="selectedFamilyMember"></family-tree>
+                </div>  
+            </div>
+        </script>
+        <script type="text/x-template" id="family-tree-template">
+            <div @click="selectFamilyMember" class="plan" :class="{selected: isSelected}">
+                <div class="description">
+                    <span class="title">
+                        Family Member: {{ name }}
+                    </span>
+                    <span class="title">
+                        Age: {{ age }}
+                    </span>
+                    <span class="title">
+                        Gender: {{ gender }}
+                    </span>
+                </div>
+            </div>
+        
+        </script>
+        <script src="https://unpkg.com/vue"></script>
+        <script src="js/practice.js"></script>
+    </body>
+</html>

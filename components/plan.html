@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Coffee Plans</title>
+        <link rel="stylesheet" href="css/style.css"></style>
+        <style>
+            .selected{
+                border: 1px solid red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" class="container mx-auto py-6">
+            <div class="content">
+                <h1 class="title">
+                    Coffee Plans
+                </h1>
+
+                <h2 class="subtitle">
+                    We travel the world to sorce the very best single origin coffee for you.
+                </h2>
+                
+                <!-- Note: this will be a dedicated component -->
+                <plan-picker></plan-picker>
+            </div>
+        </div>
+        <script type="text/x-template" id="plan-picker-template">
+            <div class="plans">
+                <!-- Note: Example of passing a prop to the component -->
+                <!-- <plan name="The Single"></plan> -->
+                <plan v-for="plan in plans" @select="selectPlan" :key="plan" :name="plan" :selected-plan="selectedPlan"></plan>
+                <!--  <plan name="The Curious"></plan>
+                <plan name="The Addict"></plan> -->
+
+            </div>
+        
+        </script>
+        <script type="text/x-template" id="plan-template">
+            <div @click="select" class="plan" :class="{selected: isSelected}">
+                <div class="description">
+                    <span class="title">
+                        {{name}}
+                    </span>
+                </div>
+            </div>
+        </script>
+        <script src="https://unpkg.com/vue"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

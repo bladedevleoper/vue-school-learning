@@ -1,0 +1,58 @@
+Vue Mastery Notes:
+
+Vue has a virtual Dom
+- the virtual dom is a way of representing the actual dom with javascript objects.
+
+
+for example:
+
+dom element:
+
+<div>Hello</div>
+
+Virtual Node within Vue:
+
+{
+    tag: "div",
+    children: [
+        {
+            text: "Hello",
+        }
+    ]
+}
+
+Vue takes this javascript object and turns renders it through the render function, if a component changes it is then sent back into vue to compare and it makes updates in the efficient way.
+
+Vue has 3 modules:
+
+1. Reactivity Module:
+
+- allows us to create javascript reactive objects that can be watched for changes.
+- these objects are watched and also tracked, so if anything does happen the code is ran with these updates.
+
+
+2. Compiler Module:
+
+- this module takes html templates and compiles them into render functions.
+- this can happen in the brower at runtime.
+- but more or less happens when a vue project is built.
+
+
+3. Renderer Module:
+
+- this module contains 3 different phases of rendering out a component onto a web page.
+
+the three phases are:
+1. The Render Phase:
+
+- The render function is called and a virtual DOM node is returned
+
+2. The Mount Phase:
+
+- The render takes the virtual DOM node and makes DOM javascript calls to make a web page.
+
+3. The Patch Phase:
+
+- The render takes the old virtual and takes the new virutual node and compares them. It will only update the parts that are required.
+
+

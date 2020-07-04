@@ -1,0 +1,48 @@
+Communication Between Components With Custom Events:
+----------------------------------------------------
+
+# When we have nested components, we need a way to commuincation to send data between them
+
+- we know that we can pass data to our child components through the childs props. But how do we pass data back up to the parent?
+
+We can add data() to our child component to start to use as local variables to store things in the component.
+- in our example we are using the selected property which is set to a boolean.
+- then a method select() to toggle true or false when the component is clicked.
+- we have a dynamic class then to toggle a css selector.
+- we then set a v-on:click="select" binding to the child component 
+- we then set the data property of selected component is set to true when it is clicked.
+
+But what if other components are already selected? We can only have plan selected at a time.
+- we need to emit an event to somehow to trigger this.
+- carry on to Customer Event
+
+Emitting a Custom Event:
+------------------------
+
+we can emit an event by doing the following:
+
+this.$emit('name-of-event', data-to-send);
+
+- name-of-event = this is the name of the event (we can name this anything)
+- data-to-send = this is optional, but this is used if we want to send data with the event to the parent component.
+
+when the event is emitted, we can simply see it being called within the vue dev tools under Events:
+the event information:
+
+event info:
+    name:"hi-there"
+    type:"$emit"
+    source:"<plan>"
+    payload:Array[0]
+        0: "some-value"
+
+name: = name of the event.
+source: where the event took place
+payload: is the data sent with the event. (payload refers to the data that is passed through).
+
+Listening out for the event in the parent component:
+----------------------------------------------------
+
+# since we emit an event from our child component, the parent component will listen out for an event.
+
+<parent-component @select="functionName"></parent-component>
