@@ -28,7 +28,7 @@
             <div class="plans">
                 <!-- Note: Example of passing a prop to the component -->
                 <!-- <plan name="The Single"></plan> -->
-                <plan v-for="plan in plans" @select="selectPlan" :key="plan" :name="plan" :selected-plan="selectedPlan"></plan>
+                <plan-picker-item v-for="plan in plans" @select="selectPlan" :key="plan" :name="plan" :selected-plan="selectedPlan"></plan-picker-item>
                 <!--  <plan name="The Curious"></plan>
                 <plan name="The Addict"></plan> -->
 

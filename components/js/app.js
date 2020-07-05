@@ -1,5 +1,5 @@
 //Plan component
-let PlanComponent = {
+let PlanPickerItemComponent = {
     template: '#plan-template',
     props: {
         name: {
@@ -39,7 +39,7 @@ let PlanPickerComponent = {
         -- componentVariable is the object we have created let PlanComponent = {} this will then become the value of the name-of-component key
     */
     components: {
-        plan: PlanComponent,
+        "plan-picker-item": PlanPickerItemComponent,
     },
     /* 
         Note:

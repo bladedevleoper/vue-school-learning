@@ -1,0 +1,73 @@
+What are Vue JS Slots?:
+-----------------------
+# Slots is another way to distribute content to components
+
+Instead of passing data to a component through props, we can pass data through slots
+
+within a vue component template, we simply define a slot as:
+
+<todo-item>
+
+    some text
+
+</todo-item>
+
+// 'some text' will then be passed to the slot
+
+<div>
+    <input type="checkbox" name="some_check_box">
+    <slot></slot>
+</div>
+
+# in the component template, we can add any element we want along with the <slot></slot>
+- for example we can add a checkbox before the slot
+
+# if we add a dynamic class to the <slot></slot> the text that we passed through within the declared component, it will take presence so the slot won't work.
+# but we can simply get around this by adding a span tag around the slot and add the class binding to the span.
+
+Such as: 
+
+<todo-list>
+    <!-- We can pass any html element here too -->
+    this text will appear in the slot
+</todo-list>
+
+<span :class="{done: completed}">
+    <slot></slot>
+</span>
+
+
+------------------------------------------------------------------------------
+
+What if we wanted to use multiple slots?
+
+# in this case we can have named slots
+- if we wanted to display description for the todo and if we wanted to display the content in a different place.
+
+
+The <slot> has a special attribute which is 'name' which allows us to specify additional slots:
+
+<slot name="description"></slot>
+
+#note: the only downfall here, is that the second slot will then get the same styling as the first slot.
+we can overcome this by providing some other vue syntax:
+
+- within the html component we can specify the following:
+
+<todo-list>
+    This will be the first paragraph in the default <slot>
+    <template v-slot:named-slot></template>
+</todo-list>
+
+The template directive splits the slot from the main slot, we can then use the v-slot directive to provide the inner 
+slot a name so we can bind to a specific slot we want to use.
+
+v-slot:slot-name-attribute
+
+example:
+
+<template v-slot:description></template>
+
+# If we want to use the v-slot shorthand we can simply use the hash symbol #description 
+
+

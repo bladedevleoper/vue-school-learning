@@ -1,0 +1,106 @@
+Component Naming Best Practices:
+--------------------------------
+
+URL: https://vuejs.org/v2/style-guide/#Tightly-coupled-component-names-strongly-recommended
+
+If a component has a multi word, we should use a hyphen in the middle.
+
+so instead of a single word such as:
+
+//bad
+Vue.component('todo', {
+
+});
+
+
+//good
+Vue.component('todo-item', {
+
+});
+
+#single words are a bad practice as they could have a conflict with an html element.
+
+Base Component Naming:
+----------------------
+
+Base components can be buttons / inputs, something that we would make globally, which can be accessed anywhere throughout the application.
+
+Example:
+
+//bad practice:
+MyButton.Vue
+VueTable.Vue
+
+
+//good practice
+
+BaseButton.vue
+BaseTable.vue
+
+
+# providing them with a 'Base' name is standard convention for base components.
+
+
+
+Single Instance Components:
+---------------------------
+
+These are things such as a nav bar or a header. These will start with the wording 'The'.
+
+// bad practice
+
+Heading.vue
+MySidebar.vue
+
+
+// good practice
+
+TheSidebar.vue
+TheHeading.vue
+
+
+Tightly Coupled Components:
+---------------------------
+
+If a child component is tightly coupled with their parent
+
+// bad practice:
+
+TodoList.Vue
+TodoItem.vue
+TodoButton.vue
+
+
+// good practice
+
+TodoList.vue
+TodoListItem.vue
+TodoListButton.vue
+
+
+# it is always best practice to have a word that assoicates everything with the parent.
+
+
+
+------------------------------------------------------------------------------------------------------
+
+Component Life Cycle:
+---------------------
+
+1 Each vue instnace goes through a series of inistialisation steps when it is created.
+- such as setup data observation
+- mount the instance to the dom.
+
+2. Along the way, it runs methods called lifecycle hooks.
+ - this gives us the oppertunity to add our own code to act in certain points.
+ - which we can add code to the specific points of the components lifecycle.
+
+ for example:
+ - if we had a blog post and needed to fetch that post from an api, we would add this to our created() method.
+
+ Further learning on Life Cycle Hooks: https://vueschool.io/lessons/understanding-the-vuejs-lifecycle-hooks
+
+
+ ------------------------------------------------------------------------------------------------------
+
+
