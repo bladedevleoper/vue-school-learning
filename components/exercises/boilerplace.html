@@ -1,0 +1,127 @@
+<html>
+
+<head>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- Template for GitHub card -->
+    
+    <github-user-card></github-user-card>
+  
+    
+    
+  </div>
+
+  <!-- Import Vue.js and axios -->
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  
+  <!-- Your JavaScript Code : -->
+  <script type="text/x-template" id="personal-image-component">
+    
+    <div class="image">
+      <img src="https://semantic-ui.com/images/avatar2/large/kristy.png">
+    </div>
+  
+  </script>
+  <script type="text/x-template" id="personal-details-component">
+    
+    <div class="content">
+      <a class="header">Kristy</a>
+      <div class="meta">
+        <span class="date">Joined in 2013</span>
+      </div>
+      <div class="description">
+        Kristy is an art director living in New York.
+      </div>
+    </div>
+  
+  </script>
+  <script type="text/x-template" id="personal-extra-details-component">
+    <div class="extra content">
+      <a>
+        <i class="user icon"></i>
+        22 Friends
+      </a>
+    </div>
+  </script>
+<script type="text/x-template" id="github-user-card">
+  
+    <div class="ui container">
+      <h1>GitHub Profiles</h1>
+      <div class="ui card">
+        <personal-image-component :image="data.avatarImage"></personal-image-component>
+        <personal-details-component></personal-details-component>
+        <personal-extra-details-component></personal-extra-details-component>
+      </div>
+    </div>
+  
+</script>
+<script>
+     const PersonalImageComponent = {
+      template: '#personal-image-component',
+      props:['image'],
+      data: function () {
+        //console.log(this.image);
+        return {};
+      },
+      mounted(){
+        setTimeout(() => {
+          // Note: this won't run until the entire view is rendered
+          this.$nextTick(function () {
+            console.log(this.image, 'called');
+          });
+        }, 10);
+      },
+    };
+    const PersonalDetailsComponent = {
+      template: '#personal-details-component',
+    };
+
+    const PersonalExtraDetialsComponent = {
+      template: '#personal-extra-details-component',
+    };
+      Vue.component('github-user-card', {
+        template: '#github-user-card',
+        components: {
+          'personal-image-component': PersonalImageComponent,
+          'personal-details-component': PersonalDetailsComponent,
+          'personal-extra-details-component': PersonalExtraDetialsComponent,
+        },
+        data: function () {
+          return {
+            data: {
+                avatarImage: '',
+              },
+              url: 'https://api.github.com/users',
+              userName:'bladedevleoper',
+              jsonObject: '',
+          };
+        },
+        created(){
+          fetch(`${this.url}/${this.userName}`)
+          .then((request) => request.json())
+          .then((response) => {
+            this.jsonObject = response;
+            this.data.avatarImage = this.jsonObject.avatar_url;
+            //console.log(this.data.avatarImage);            
+          });
+        },
+        mounted(){
+          //perform the ajax call
+          
+        },
+    });
+</script>
+  <script>
+    new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+
+</html>

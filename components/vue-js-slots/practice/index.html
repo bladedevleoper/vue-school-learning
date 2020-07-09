@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice using slots</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .footer {
+            position: absolute;
+            bottom: 0;
+            line-height: 60px;
+        
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <div class="container">
+            <page-layout>
+                <template #header-slot>
+                    <p>Header</p>
+                </template>
+                <p>This is the main content</p>
+                <template v-slot:footer-slot><p>Footer</p></template>
+            </page-layout>
+        </div>
+    </div>
+
+<script type="text/x-template" id="page-layout">
+    <div class="page-layout">
+        <h1 class="text-primary">
+           <slot name="header-slot"></slot>  
+        </h1>
+        <div class="row">
+            <div class="col">
+                <slot></slot>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <slot name="footer-slot"></slot>
+        </footer>
+    </div>
+</script>
+<script type="text/x-template" id="header-component-id">
+    <header>
+        
+    </header>
+</script>
+
+<script type="text/x-template" id="footer-component">
+</script>
+<script src="https://www.unpkg.com/vue"></script>
+<script src="../practice/js/app.js"></script>
+</body>
+</html>
