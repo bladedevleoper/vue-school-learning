@@ -24,19 +24,19 @@
   <script type="text/x-template" id="personal-image-component">
     
     <div class="image">
-      <img src="https://semantic-ui.com/images/avatar2/large/kristy.png">
+      <img :src="image">
     </div>
   
   </script>
   <script type="text/x-template" id="personal-details-component">
     
     <div class="content">
-      <a class="header">Kristy</a>
+      <a class="header">{{ name }}</a>
       <div class="meta">
-        <span class="date">Joined in 2013</span>
+        <span class="date">Joined in {{ year }}</span>
       </div>
       <div class="description">
-        Kristy is an art director living in New York.
+        {{ description }}
       </div>
     </div>
   
@@ -45,7 +45,7 @@
     <div class="extra content">
       <a>
         <i class="user icon"></i>
-        22 Friends
+        {{followers}} Friends
       </a>
     </div>
   </script>
@@ -55,8 +55,8 @@
       <h1>GitHub Profiles</h1>
       <div class="ui card">
         <personal-image-component :image="data.avatarImage"></personal-image-component>
-        <personal-details-component></personal-details-component>
-        <personal-extra-details-component></personal-extra-details-component>
+        <personal-details-component :name="data.name" :year="data.joined" :description="data.bio"></personal-details-component>
+        <personal-extra-details-component :followers="data.followers"></personal-extra-details-component>
       </div>
     </div>
   
@@ -65,26 +65,15 @@
      const PersonalImageComponent = {
       template: '#personal-image-component',
       props:['image'],
-      data: function () {
-        //console.log(this.image);
-        return {};
-      },
-      mounted(){
-        //timeout set as the time a little delay of api passing data to child, delay of 10 seconds
-        setTimeout(() => {
-          // Note: this won't run until the entire view is rendered
-          this.$nextTick(function () {
-            console.log(this.image, 'called');
-          });
-        }, 10);
-      },
     };
     const PersonalDetailsComponent = {
       template: '#personal-details-component',
+      props: ['name','year','description']
     };
 
     const PersonalExtraDetialsComponent = {
       template: '#personal-extra-details-component',
+      props:['followers'],
     };
       Vue.component('github-user-card', {
         template: '#github-user-card',
@@ -97,25 +86,42 @@
           return {
             data: {
                 avatarImage: '',
+                name: '',
+                joined: '',
+                bio: '',
+                followers: '',
               },
               url: 'https://api.github.com/users',
               userName:'bladedevleoper',
-              jsonObject: '',
           };
         },
         created(){
           fetch(`${this.url}/${this.userName}`)
           .then((request) => request.json())
           .then((response) => {
-            this.jsonObject = response;
-            this.data.avatarImage = this.jsonObject.avatar_url;
-            //console.log(this.data.avatarImage);            
+
+            this.data.avatarImage = response.avatar_url;
+            this.data.name = response.name;
+            this.data.joined = this.getDateJoined(response.created_at);
+            this.data.bio = response.bio;
+            this.data.followers = response.followers;   
+          
           });
         },
         mounted(){
           //perform the ajax call
           
         },
+        methods: {
+          getDateJoined: function (date) {
+            const splitDate = date.split('T').shift().split('-');
+            const year =  splitDate[0];
+            //const month = splitDate[1];
+            //const day = splitDate[2];
+
+            return `${year}`;
+          },
+        }
     });
 </script>
   <script>
