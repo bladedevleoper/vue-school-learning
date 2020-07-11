@@ -12,19 +12,16 @@
     
     <github-user-card></github-user-card>
   
-    
-    
   </div>
 
   <!-- Import Vue.js and axios -->
   <script src="https://unpkg.com/vue"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   
   <!-- Your JavaScript Code : -->
   <script type="text/x-template" id="personal-image-component">
     
     <div class="image">
-      <img :src="image">
+      <img :src="image" alt="James Image" title="A picture of James from his GitHub profile">
     </div>
   
   </script>
@@ -108,17 +105,11 @@
           
           });
         },
-        mounted(){
-          //perform the ajax call
-          
-        },
         methods: {
           getDateJoined: function (date) {
             const splitDate = date.split('T').shift().split('-');
-            const year =  splitDate[0];
-            //const month = splitDate[1];
-            //const day = splitDate[2];
-
+            const year = splitDate.shift();
+            
             return `${year}`;
           },
         }
