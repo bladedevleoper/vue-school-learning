@@ -17,7 +17,6 @@
     <div class="ui container">
       <div class="ui cards">
         <github-user-card username="bladedevleoper"></github-user-card>
-        <github-user-card username="crazzuk"></github-user-card>
       </div>
     </div>
     
@@ -37,7 +36,7 @@
   <script type="text/x-template" id="personal-details-component">
     
     <div class="content">
-      <a class="header">{{ name }}</a>
+      <a :href="`https://github.com/${username}`" class="header" target="_blank">{{ name }}</a>
       <div class="meta">
         <span class="date">Joined in {{ year }}</span>
       </div>
@@ -49,7 +48,7 @@
   </script>
   <script type="text/x-template" id="personal-extra-details-component">
     <div class="extra content">
-      <a>
+      <a :href="`https://github.com/${username}?tab=followers`">
         <i class="user icon"></i>
         {{followers}} Friends
       </a>
@@ -59,8 +58,8 @@
 
       <div class="ui card">
         <personal-image-component :image="data.avatarImage"></personal-image-component>
-        <personal-details-component :name="data.name" :year="data.joined" :description="data.bio"></personal-details-component>
-        <personal-extra-details-component :followers="data.followers"></personal-extra-details-component>
+        <personal-details-component :name="data.name" :year="data.joined" :description="data.bio" :username="data.username"></personal-details-component>
+        <personal-extra-details-component :followers="data.followers" :username="data.username"></personal-extra-details-component>
       </div>
     
   
@@ -72,12 +71,12 @@
     };
     const PersonalDetailsComponent = {
       template: '#personal-details-component',
-      props: ['name','year','description']
+      props: ['name','year','description', 'username']
     };
 
     const PersonalExtraDetialsComponent = {
       template: '#personal-extra-details-component',
-      props:['followers'],
+      props:['followers', 'username'],
     };
       Vue.component('github-user-card', {
         template: '#github-user-card',
@@ -100,11 +99,13 @@
                 joined: '',
                 bio: '',
                 followers: '',
+                username: '',
               },
               url: 'https://api.github.com/users',
           };
         },
         created(){
+          //call github api to fetch specific profile
           fetch(`${this.url}/${this.username}`)
           .then((request) => request.json())
           .then((response) => {
@@ -112,7 +113,8 @@
             this.data.name = response.name;
             this.data.joined = this.getDateJoined(response.created_at);
             this.data.bio = response.bio;
-            this.data.followers = response.followers;   
+            this.data.followers = response.followers;
+            this.data.username = response.login;
           });
         },
         methods: {
