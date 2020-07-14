@@ -9,8 +9,8 @@
 
   <div id="app">
     <!-- Template for GitHub card -->
-    
-    <github-user-card></github-user-card>
+    <!-- Not binding the prop to the parent -->
+    <github-user-card username="bladedevleoper"></github-user-card>
   
   </div>
 
@@ -74,6 +74,12 @@
     };
       Vue.component('github-user-card', {
         template: '#github-user-card',
+        props: {
+            username: {
+              type: String,
+              required: true
+          } 
+        },
         components: {
           'personal-image-component': PersonalImageComponent,
           'personal-details-component': PersonalDetailsComponent,
@@ -89,20 +95,18 @@
                 followers: '',
               },
               url: 'https://api.github.com/users',
-              userName:'bladedevleoper',
+              //userName:'bladedevleoper',
           };
         },
         created(){
-          fetch(`${this.url}/${this.userName}`)
+          fetch(`${this.url}/${this.username}`)
           .then((request) => request.json())
           .then((response) => {
-
             this.data.avatarImage = response.avatar_url;
             this.data.name = response.name;
             this.data.joined = this.getDateJoined(response.created_at);
             this.data.bio = response.bio;
             this.data.followers = response.followers;   
-          
           });
         },
         methods: {
