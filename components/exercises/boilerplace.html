@@ -16,7 +16,7 @@
     <!-- Not binding the prop to the parent -->
     <div class="ui container">
       <div class="ui cards">
-        <github-user-card username="bladedevleoper"></github-user-card>
+        <github-user-card v-for="user in usernames" :key="user" :username="user"></github-user-card>
       </div>
     </div>
     
@@ -129,7 +129,10 @@
 </script>
   <script>
     new Vue({
-      el: '#app'
+      el: '#app',
+      data: {
+        usernames:['bladedevleoper', 'crazzuk', 'juststeveking'],
+      }
     })
   </script>
 </body>
