@@ -8,10 +8,19 @@
 <body>
 
   <div id="app">
-    <!-- Template for GitHub card -->
+    <!-- Section Title -->
+    <div class="ui container">
+      <h1 class="center aligned segment">GitHub Profiles</h1>
+    </div>
+      <!-- Template for GitHub card -->
     <!-- Not binding the prop to the parent -->
-    <github-user-card username="bladedevleoper"></github-user-card>
-  
+    <div class="ui container">
+      <div class="ui cards">
+        <github-user-card username="bladedevleoper"></github-user-card>
+        <github-user-card username="crazzuk"></github-user-card>
+      </div>
+    </div>
+    
   </div>
 
   <!-- Import Vue.js and axios -->
@@ -21,7 +30,7 @@
   <script type="text/x-template" id="personal-image-component">
     
     <div class="image">
-      <img :src="image" alt="James Image" title="A picture of James from his GitHub profile">
+      <img :src="image" alt="James Image" title="A p from his GitHub profile">
     </div>
   
   </script>
@@ -47,15 +56,13 @@
     </div>
   </script>
 <script type="text/x-template" id="github-user-card">
-  
-    <div class="ui container">
-      <h1>GitHub Profiles</h1>
+
       <div class="ui card">
         <personal-image-component :image="data.avatarImage"></personal-image-component>
         <personal-details-component :name="data.name" :year="data.joined" :description="data.bio"></personal-details-component>
         <personal-extra-details-component :followers="data.followers"></personal-extra-details-component>
       </div>
-    </div>
+    
   
 </script>
 <script>
@@ -95,7 +102,6 @@
                 followers: '',
               },
               url: 'https://api.github.com/users',
-              //userName:'bladedevleoper',
           };
         },
         created(){
