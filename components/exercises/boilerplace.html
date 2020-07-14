@@ -29,7 +29,7 @@
   <script type="text/x-template" id="personal-image-component">
     
     <div class="image">
-      <img :src="image" alt="James Image" title="A p from his GitHub profile">
+      <img :src="image" alt="James Image" :title="`A picture from ${name} GitHub profile`">
     </div>
   
   </script>
@@ -57,7 +57,7 @@
 <script type="text/x-template" id="github-user-card">
 
       <div class="ui card">
-        <personal-image-component :image="data.avatarImage"></personal-image-component>
+        <personal-image-component :image="data.avatarImage" :name="data.name"></personal-image-component>
         <personal-details-component :name="data.name" :year="data.joined" :description="data.bio" :username="data.username"></personal-details-component>
         <personal-extra-details-component :followers="data.followers" :username="data.username"></personal-extra-details-component>
       </div>
@@ -67,7 +67,7 @@
 <script>
      const PersonalImageComponent = {
       template: '#personal-image-component',
-      props:['image'],
+      props:['image', 'name'],
     };
     const PersonalDetailsComponent = {
       template: '#personal-details-component',
