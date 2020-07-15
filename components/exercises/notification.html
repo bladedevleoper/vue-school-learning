@@ -39,7 +39,7 @@
 
   <!-- Template for Notification Message -->
   <script type="text/x-template" id="notification-message-template">
-    <div :class="`ui ${type} message`" v-if="display">
+    <div class="ui message" :class="type" v-if="display">
         <i class="close icon" @click="removeNotification"></i>
         <div class="header">
           <slot name="header">{{ header }}</slot>
